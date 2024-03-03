@@ -73,10 +73,10 @@ def get_data_for_list_str(list_str):
     return data_for_name
 
 def get_params_str(str_in, queue_length):
-    find_int = re.findall(r'\d+', str_in)
+    int_str = re.findall(r'\d+', str_in)
     value_params, key_params = '', ''
-    if find_int:
-        value_params = int(find_int[0])
+    if int_str:
+        value_params = int(int_str[0])
         key_params = "position"
         if "people in front of me" in str_in:
             value_params += 1
