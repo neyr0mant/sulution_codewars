@@ -119,19 +119,18 @@ def get_data_position_rule_and_assert(data_in):
         else:
             name_not_position.update({name: data})
     position_found = list(name_with_position.keys())
-
     assert_rule = any([len(position_found) == len_names, # условие если всех распределили по позициям
                        len(potential_mr_wrong) > 2, # услови если лжецов больше 2
                        len(potential_mr_right) + len(potential_mr_wrong) >
                        len_names and not name_not_position # условие если нет людей без позиции,
                        # но при этом количесрво потенциных лжецов и правдивых равно длине списка
                        ])
-    return assert_rule, name_with_position, name_not_position, potential_mr_wrong
+    return assert_rule, name_with_position, name_not_position, potential_mr_wrong, potential_mr_right
 
 
 def find_out_mr_wrong(conversation):
     data_for_name = get_data_for_list_str(conversation)
-    assert_composition, name_with_position, name_not_position, potential_mr_wrong = (
+    assert_composition, name_with_position, name_not_position, potential_mr_wrong, potential_mr_right = (
         get_data_position_rule_and_assert(data_for_name))
     if assert_composition:
         print("РЕШЕНИЙ НЕТ! ")
