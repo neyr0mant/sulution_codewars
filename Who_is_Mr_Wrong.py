@@ -119,10 +119,13 @@ def get_data_position_rule_and_assert(data_in):
         else:
             name_not_position.update({name: data})
     position_found = list(name_with_position.keys())
-    #Если исходные данные не противоречивы изначально по позициям или в исходных данных по позициям больше 2 вруноы
-    # тогда лжецев или нет, или их четное количество - не подходит по условиям
-    assert_rule = any([len(position_found) == len_names, len(potential_mr_wrong) > 2,
-                       len(potential_mr_right) + len(potential_mr_wrong) > len_names and not name_not_position])
+
+    assert_rule = any([len(position_found) == len_names, # условие если всех распределили по позициям
+                       len(potential_mr_wrong) > 2, # услови если лжецов больше 2
+                       len(potential_mr_right) + len(potential_mr_wrong) >
+                       len_names and not name_not_position # условие если нет людей без позиции,
+                       # но при этом количесрво потенциных лжецов и правдивых равно длине списка
+                       ])
     return assert_rule, name_with_position, name_not_position, potential_mr_wrong
 
 
