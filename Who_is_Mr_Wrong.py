@@ -1,7 +1,8 @@
 conversation1=[
 "John:I'm in 1st position.",
 "Peter:I'm in 2nd position.",
-"Tom1:I'm in 3st position.",
+"Tom:I'm in 1st position.",
+"Peter:The man behind me is Tom."
 ]
 
 conversation2=[
@@ -41,8 +42,16 @@ conversation5 = ['Mnulesil:The man in front of me is Reoowpqgn.',
  'Mnulesil:There are 5 people behind me.',
  "Rynuk:I'm in 9th position.",
  'Aiaug:There are 7 people behind me.']
-list_conversation = [conversation1, conversation2,conversation3,conversation4, conversation5]
-list_conversation = [i for idx, i in enumerate(list_conversation) if idx in [0]]
+
+conversation6=[
+"John:I'm in 1st position.",
+"Peter:I'm in 2nd position.",
+"Tom:I'm in 1st position.",
+]
+list_conversation = [conversation1, conversation2,conversation3,conversation4, conversation5, conversation6]
+# lsit_acssert = [1,2,3,4,5,6]
+lsit_acssert = [1,2,3,4,5,6]
+list_conversation = [i for idx, i in enumerate(list_conversation) if idx in lsit_acssert]
 import re
 import json
 
@@ -87,19 +96,24 @@ def use_rule_and_assert_composition(data_in, rule):
     print()
 
 
-def get_data_position_and_rule(data_in):
+def get_data_position_rule_and_assert(data_in):
     len_names = len(data_in.keys())
     name_with_position = {}
     name_not_position = {}
     potential_mr_wrong = []
-    for name, data in data_in.items():
+    potential_mr_right = []
+    for idx, data_name in enumerate(data_in.items()):
+        name, data = data_name
         position = data.get("position")
+        potential_mr_right.append(name)
         if position:
             exist_name = name_with_position.get(position)
             if exist_name:
                 name_add = exist_name + [name]
                 name_with_position[position] = name_add
                 potential_mr_wrong.extend(name_add)
+                del potential_mr_right[idx]
+
             else:
                 name_with_position[position] = [name]
         else:
@@ -107,19 +121,22 @@ def get_data_position_and_rule(data_in):
     position_found = list(name_with_position.keys())
     #Если исходные данные не противоречивы изначально по позициям или в исходных данных по позициям больше 2 вруноы
     # тогда лжецев или нет, или их четное количество - не подходит по условиям
-    assert_rule = [len(position_found) != len_names, len(potential_mr_wrong) <= 2]
-    return bool(all(assert_rule)), name_with_position, name_not_position, potential_mr_wrong
+    assert_rule = any([len(position_found) == len_names, len(potential_mr_wrong) > 2,
+                       len(potential_mr_right) + len(potential_mr_wrong) > len_names and not name_not_position])
+    return assert_rule, name_with_position, name_not_position, potential_mr_wrong
 
 
 def find_out_mr_wrong(conversation):
     data_for_name = get_data_for_list_str(conversation)
     assert_composition, name_with_position, name_not_position, potential_mr_wrong = (
-        get_data_position_and_rule(data_for_name))
-    if not assert_composition:
+        get_data_position_rule_and_assert(data_for_name))
+    if assert_composition:
+        print("РЕШЕНИЙ НЕТ! ")
         return None
-    print(json.dumps(data_for_name, indent=2))
-    print(json.dumps(name_with_position, indent=2))
-    print(json.dumps(name_not_position, indent=2))
+    print("РЕШЕНИЯ ЕСТЬ! ")
+    # print(json.dumps(data_for_name, indent=2))
+    # print(json.dumps(name_with_position, indent=2))
+    # print(json.dumps(name_not_position, indent=2))
 
 
 
