@@ -1,7 +1,7 @@
 conversation1=[
-"John:I'm in 111st position.",
+"John:I'm in 1st position.",
 "Peter:I'm in 2nd position.",
-"Tom:I'm in 111st position.",
+"Tom:I'm in 1st position.",
 "Peter:The man behind me is Tom."
 ]
 
@@ -109,7 +109,7 @@ def get_data_position_rule_and_assert(data_in):
         position = data.get("position")
         potential_mr_right.append(name)
         if position:
-            wrong_position = position if (0 > position or position > len_names) else wrong_position
+            wrong_position = position if not (0 <= position <= len_names) else wrong_position
             if wrong_position:
                 break
             exist_name = name_with_position.get(position)
@@ -123,9 +123,9 @@ def get_data_position_rule_and_assert(data_in):
         else:
             name_not_position.update({name: data})
     position_found = list(name_with_position.keys())
-    assert_out = [wrong_position, #Условие на невозможную позицию
+    assert_out = [wrong_position, # Условие на невозможную позицию
                   len(position_found) == len_names,  # условие если всех распределили по позициям
-                  len(potential_mr_wrong) > 2,  # услови если лжецов больше 2
+                  len(potential_mr_wrong) > 2,  # Условие если лжецов больше 2
                   len(potential_mr_right) + len(potential_mr_wrong) >
                   len_names and not name_not_position # условие если нет людей без позиции,
                    # но при этом количесрво потенциных лжецов и правдивых больше списка
@@ -137,14 +137,8 @@ def find_out_mr_wrong(conversation):
     assert_composition, name_with_position, name_not_position, potential_mr_wrong, potential_mr_right = (
         get_data_position_rule_and_assert(data_for_name))
     if any(assert_composition):
-        print(assert_composition)
-        print("РЕШЕНИЙ НЕТ! ")
         return None
-    print("РЕШЕНИЯ ЕСТЬ! ")
-    print(assert_composition)
-    # print(json.dumps(data_for_name, indent=2))
-    # print(json.dumps(name_with_position, indent=2))
-    # print(json.dumps(name_not_position, indent=2))
+    print()
 
 for idx, conversation in enumerate(list_conversation):
     print(f"НАБОР НОМЕР {idx+1}")
