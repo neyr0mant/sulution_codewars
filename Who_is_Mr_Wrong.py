@@ -110,8 +110,6 @@ def get_data_position_rule_and_assert(data_in):
         potential_mr_right.append(name)
         if position:
             wrong_position = position if not (0 <= position <= len_names) else wrong_position
-            if wrong_position:
-                break
             exist_name = name_with_position.get(position)
             if exist_name:
                 name_add = exist_name + [name]
