@@ -107,8 +107,8 @@ def get_data_position_and_rule(data_in):
     position_found = list(name_with_position.keys())
     #Если исходные данные не противоречивы изначально по позициям или в исходных данных по позициям больше 2 вруноы
     # тогда лжецев или нет, или их четное количество - не подходит по условиям
-    assert_bool = [len(position_found) != len_names, len(potential_mr_wrong) <= 2]
-    return bool(all(assert_bool)), name_with_position, name_not_position, potential_mr_wrong
+    assert_rule = [len(position_found) != len_names, len(potential_mr_wrong) <= 2]
+    return bool(all(assert_rule)), name_with_position, name_not_position, potential_mr_wrong
 
 
 def find_out_mr_wrong(conversation):
