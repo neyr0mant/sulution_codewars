@@ -1,8 +1,7 @@
 conversation1=[
-"John:I'm in 1st position.",
-"Peter:I'm in 2nd position.",
-"Tom:I'm in 1st position.",
-"Peter:The man behind me is Tom."
+"Tom:I'm in 2nd position.",
+"Peter:The man behind me is Tom.",
+"John:The man behind me is Tom."
 ]
 
 conversation2=[
@@ -81,6 +80,7 @@ def get_data_for_list_str(list_str):
     data_link_name = {}
     position_find = set()
     position_for_name = {}
+    plus_minus_data = {}
     for name, list_data in dict_rule_txt_for_name.items():
         for data_str in list_data:
             cur_params = data_for_name.get(name, {})
@@ -89,6 +89,14 @@ def get_data_for_list_str(list_str):
                 if value_params == name: # когда человек ссылается сам на себя - значит он врун
                     mr_wrong = name
                     break
+                list_name_position_plus_minus = plus_minus_data.get(key_params)
+                if list_name_position_plus_minus:
+                    name_plus_minus = list_name_position_plus_minus[0]
+                    if data_link_name[name_plus_minus].get(key_params) == value_params:
+                        list_name_same_position.extend([name, name_plus_minus])
+                        #два человека ссылаются на одного и того идя вверх или низ - значит среди них врун
+                else:
+                    plus_minus_data[key_params] = [name]
             if isinstance(value_params, int):
                 data_position.update({name: {key_params: value_params}})
                 exist_position = position_for_name.get(value_params)
