@@ -1,66 +1,10 @@
-conversation1=[
-"Tom:I'm in 2nd position.",
-"Peter:The man behind me is Tom.",
-"John:The man behind me is Tom."
-]
-
-conversation2=[
-"John:I'm in 1st position.",
-"Peter:I'm in 2nd position.",
-"Tom:I'm in 1st position.",
-"Peter:The man in front of me is Tom."
-]
-
-conversation3=[
-"John:I'm in 1st position.",
-"Peter:There is 1 people in front of me.",
-"Tom:There are 2 people behind me.",
-"Peter:The man behind me is Tom."
-]
-
-conversation4=[
-"John:The man behind me is Peter.",
-"Peter:There is 1 people in front of me.",
-"Tom:There are 2 people behind me.",
-"Peter:The man behind me is Tom."
-]
-conversation5 = [
-    'Mnulesil:The man in front of me is Reoowpqgn.',
- 'Sene:There are 6 people in front of me.',
- "Qqeod:I'm in 6th position.",
- 'Gdimeia:There are 9 people behind me.',
- 'Hekoo:There are 2 people behind me.',
- 'Aiaug:The man behind me is Reoowpqgn.',
- 'Reoowpqgn:There are 6 people behind me.',
- 'Gdimeia:There are 0 people in front of me.',
- 'Qqeod:The man in front of me is Mnulesil.',
- 'Hekoo:There are 7 people in front of me.',
- 'Rynuk:The man behind me is Rynuk.',
- "Yemeyai:I'm in 2nd position.",
- 'Ooseebb:The man in front of me is Hekoo.',
- 'Reoowpqgn:There are 3 people in front of me.',
- 'Mnulesil:There are 5 people behind me.',
- "Rynuk:I'm in 9th position.",
- 'Aiaug:There are 7 people behind me.'
-]
-
-conversation6=[
-"John:I'm in 1st position.",
-"Peter:I'm in 2nd position.",
-"Tom:I'm in 1st position.",
-]
-conversation7 = ["Tom:The man behind me is Bob.",
-      "Bob:The man in front of me is Tom.",
-      "Bob:The man behind me is Gary.",
-      "Gary:The man in front of me is Bob.",
-      "Fred:I'm in 1st position."]
-list_conversation = [conversation1, conversation2,conversation3,conversation4, conversation5, conversation6, conversation7]
-# lsit_acssert = [0,1, 2,3,4,5,6]
-lsit_acssert = [0]
-list_conversation = [i for idx, i in enumerate(list_conversation) if idx in lsit_acssert]
 import re
-import json
-
+conversation=[
+"John:I'm in 1st position.",
+"Peter:I'm in 2nd position.",
+"Tom:I'm in 1st position.",
+"Peter:The man behind me is Tom."
+]
 def get_data_for_list_str(list_str):
     dict_rule_txt_for_name = {}
     for rule_str in list_str:
@@ -163,16 +107,7 @@ def find_out_mr_wrong(conversation):
         for name_same_position in list_name_same_position:
             res = assert_position_rule(data_position, data_link_name, position_free, all_position,
                                        name_same_position)
-
-
-    # print(assert_composition)
-    # print(f"Имена без позиций: {name_not_position}")
-    # print(f"Имена с позициями: {name_with_position}")
-    # print()
-
-for idx, conversation in enumerate(list_conversation):
-    print(f"НАБОР НОМЕР {idx+1}")
-    print(find_out_mr_wrong(conversation))
+print(find_out_mr_wrong(conversation))
 
 
 
